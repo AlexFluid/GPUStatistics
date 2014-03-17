@@ -7,8 +7,6 @@
 
 #include <curand_kernel.h>
 
-__device__ __constant__ float c_Filter_15x15x15[15][15][15];
-
 __global__ void SetupRandKernel(curandState *states, int N)
 {
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
@@ -20,7 +18,7 @@ __global__ void SetupRandKernel(curandState *states, int N)
     curand_init(1234, idx, 0, &states[idx]);
 }
 
-__global__ void DoCalculationsGPU(float* Means, float* Data, curandState *states, int NBOOTSTRAPS, int NSAMPLES)
+__global__ void DoCalculationsGPU(float* Means, const float* __restrict__ Data, const curandState *states, int NBOOTSTRAPS, int NSAMPLES)
 {
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
 

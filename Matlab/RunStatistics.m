@@ -13,7 +13,7 @@ close all
 
 mex Statistics.cpp -lcudart -lcurand -lStatistics -IC:/Program' Files'/NVIDIA' GPU Computing Toolkit'/CUDA/v5.0/include -LC:/Program' Files'/NVIDIA' GPU Computing Toolkit'/CUDA/v5.0/lib/x64 -LC:/users/wande/Documents/Visual' Studio 2010'/Projects/Statistics/x64/Release/ -IC:/users/wande/Documents/Visual' Studio 2010'/Projects/Statistics/Statistics
 
-Nsamples = 1000;
+Nsamples = 10000;
 Nbootstraps = 100000;
 
 data = 100*randn(Nsamples,1) + 332;
