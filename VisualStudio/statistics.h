@@ -31,17 +31,9 @@ private:
 
 	double	processingTime;
 
-	float* h_xtxxt;
-	float* h_Contrasts;
-	float* h_Residuals;
-	float* h_Fit;
 	float* h_Means;
 	float* h_Data;
 
-	float* d_xtxxt;
-	float* d_Contrasts;
-	float* d_Residuals;
-	float* d_Fit;
 	float* d_Means;
 	float* d_Data;
 	float* d_RandomSamples;
