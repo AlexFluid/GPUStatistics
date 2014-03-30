@@ -18,13 +18,6 @@ Statistics::Statistics(int samples, int bootstraps)
 	NBOOTSTRAPS = bootstraps;
 }
 
-Statistics::Statistics(int samples, int bootstraps, int regressors)
-{
-    NSAMPLES = samples;
-	NBOOTSTRAPS = bootstraps;
-	NUMBER_OF_REGRESSORS = regressors;
-}
-
 Statistics::~Statistics()
 {
 
@@ -35,23 +28,10 @@ void Statistics::SetInputDataPointers(float* data)
 	h_Data = data;
 }
 
-void Statistics::SetInputDataPointers(float* fit, float* residuals, float* xtxxt)
-{
-	h_Fit = fit;
-	h_Residuals = residuals;
-	h_xtxxt = xtxxt;
-}
-
 void Statistics::SetOutputDataPointers(float* means)
 {
 	h_Means = means;
 }
-
-void Statistics::SetOutputDataPointersContrasts(float* contrasts)
-{
-	h_Contrasts = contrasts;
-}
-
 
 double Statistics::BootstrapMean()
 {        
@@ -144,7 +124,7 @@ double Statistics::BootstrapMeanCublas()
 	SetMeanVector<<<dimGrid, dimBlock>>>(d_MeanVector, NSAMPLES);
 
 	
-	// 1024 threads per block
+	// 256 threads per block
 	threadsInX = 256;
 	
     // Round up to get sufficient number of blocks

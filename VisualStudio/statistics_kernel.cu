@@ -54,7 +54,6 @@ __global__ void GenerateRandomSamples(float* RandomSamples, const float* __restr
 {
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
 	
-	//if (idx >= NSAMPLES)
 	if (idx >= NBOOTSTRAPS)
 		return;
 	
@@ -62,7 +61,6 @@ __global__ void GenerateRandomSamples(float* RandomSamples, const float* __restr
 	curand_init(1234, idx, 0, &localState);
 
 	float Nf = (float)NSAMPLES - 1.0f;	
-	//for (int i = 0; i < NBOOTSTRAPS; i++)
 	for (int i = 0; i < NSAMPLES; i++)
 	{	 
 		int randomIndex = (int)(curand_uniform(&localState) * Nf);		

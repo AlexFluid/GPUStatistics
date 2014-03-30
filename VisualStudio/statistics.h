@@ -13,21 +13,17 @@ class Statistics
 public:
 
 	Statistics(int samples, int bootstraps);	
-	Statistics(int samples, int bootstraps, int regressors);	
-    ~Statistics();
+	~Statistics();
 
 	void SetInputDataPointers(float*);
-	void SetInputDataPointers(float*,float*,float*);
 	void SetOutputDataPointers(float*);
-	void SetOutputDataPointersContrasts(float*);
-
+	
 	double BootstrapMean();
 	double BootstrapMeanCublas();
-
     
 private:
 
-    int NSAMPLES, NBOOTSTRAPS, NUMBER_OF_REGRESSORS;
+    int NSAMPLES, NBOOTSTRAPS;
 
 	int threadsInX, threadsInY, threadsInZ;
     int blocksInX, blocksInY, blocksInZ;
