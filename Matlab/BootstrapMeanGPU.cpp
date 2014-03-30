@@ -82,7 +82,7 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 
     my_calculator.SetInputDataPointers(h_Data);
     my_calculator.SetOutputDataPointers(h_Means);
-    double gputime = my_calculator.DoCalculations();
+    double gputime = my_calculator.BootstrapMean();
     *time = gputime*1000;
     
     mexPrintf("Calculations took %f ms \n",gputime*1000);
@@ -95,9 +95,6 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
 	// Free all the allocated memory on the host
 	mxFree(h_Means);
 	mxFree(h_Data);
-        
-    //cudaThreadExit();
-    //CUT_THREADEND;
-
+            
  	return;
 }
