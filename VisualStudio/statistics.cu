@@ -121,16 +121,7 @@ double Statistics::BootstrapMeanCublas()
 	
 	// Set mean vector
 	SetMeanVector<<<dimGrid, dimBlock>>>(d_MeanVector, NSAMPLES);
-	
-	// 256 threads per block
-	threadsInX = 256;
-	
-    // Round up to get sufficient number of blocks
-    blocksInX = (int)ceil((float)NBOOTSTRAPS / (float)threadsInX);
-	
-    dimGrid  = dim3(blocksInX, 1, 1);
-    dimBlock = dim3(threadsInX, 1, 1);
-	
+		    
 	// Generate random samples	
 	curandGenerator_t my_generator;
 	curandCreateGenerator(&my_generator,CURAND_RNG_PSEUDO_XORWOW);
