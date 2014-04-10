@@ -19,15 +19,7 @@ __global__ void SetupRandKernel(curandState *states, int N)
 }
 
 
-__global__ void SetMeanVector(float* MeanVector, int NSAMPLES)
-{
-    int idx = threadIdx.x + blockIdx.x * blockDim.x;
-	
-	if (idx >= NSAMPLES)
-		return;
-	
-	MeanVector[idx] = 1.0f/(float)NSAMPLES;
-}
+
 
 
 __global__ void BootstrapMeanGPU(float* Means, const float* __restrict__ Data, int NBOOTSTRAPS, int NSAMPLES)
@@ -50,23 +42,27 @@ __global__ void BootstrapMeanGPU(float* Means, const float* __restrict__ Data, i
 	Means[idx] = sum / (float)NSAMPLES;
 }
 
+
 __global__ void GenerateRandomSamples(float* RandomSamples, const float* __restrict__ Data, int NBOOTSTRAPS, int NSAMPLES)
 {
     int idx = threadIdx.x + blockIdx.x * blockDim.x;
 	
-	if (idx >= NBOOTSTRAPS)
+	if (idx >= (NSAMPLES * NBOOTSTRAPS))
 		return;
-	
-    curandState localState;
-	curand_init(1234, idx, 0, &localState);
-
-	float Nf = (float)NSAMPLES - 1.0f;	
-	for (int i = 0; i < NSAMPLES; i++)
-	{	 
-		int randomIndex = (int)(curand_uniform(&localState) * Nf);		
-		RandomSamples[idx + i*NBOOTSTRAPS] = Data[randomIndex];		
-    }
+	    
+    float Nf = (float)NSAMPLES - 1.0f;	
+	int randomIndex = (int)(RandomSamples[idx] * Nf);
+	RandomSamples[idx] = Data[randomIndex];		    
 }
 
+__global__ void SetMeanVector(float* MeanVector, int NSAMPLES)
+{
+    int idx = threadIdx.x + blockIdx.x * blockDim.x;
+	
+	if (idx >= NSAMPLES)
+		return;
+	
+	MeanVector[idx] = 1.0f/(float)NSAMPLES;
+}
 
 #endif
